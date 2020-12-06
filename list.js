@@ -7,11 +7,16 @@ imgs = [...new Set(Array.from(document.images))]
     .filter(src => src ? true : false )
     .sort()
 elX.style.cssText = 'position:absolute;text-align:center;padding:10px;top:10px;left:10px;right:10px;background:#abc;z-index:10000;border:4px solid black;border-radius:10px'
-elX.innerHTML = '<ul>'
-imgs.forEach(img => elX.innerHTML +=
-    `<li style="list-style-type:none;padding:10px"><img style="border:2px solid red;vertical-align:middle" src="${img}"><a style="padding-left:5px;" href="${img}">${img}</a></li>`
-)
-elX.innerHTML += '</ul>'
+if (imgs.length > 0) {
+    elX.innerHTML += `<h3 style="color:black">Image List (${imgs.length} found)</h3>`
+    elX.innerHTML += '<ul>'
+    imgs.forEach(img => elX.innerHTML +=
+        `<li style="list-style-type:none;padding:10px"><img style="border:2px solid red;vertical-align:middle" src="${img}"><a style="padding-left:5px;" href="${img}">${img}</a></li>`
+    )
+    elX.innerHTML += '</ul>'
+} else {
+    elX.innerHTML += '<h3 style="color:black">No images found</h3>'
+}
 buttonX.addEventListener('click', evt => {
     evt.preventDefault()
     setTimeout(_ => {
