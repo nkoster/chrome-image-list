@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Imgs",
+  "version": "0.0.1",
+  "description": "Shows a list of images in the web page.",
+  "icons": {
+      "48": "imgs-48.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "imgs-48.png",
+    "default_title": "Imgs",
+    "default_popup": "imgs.html"
+  }
+}
