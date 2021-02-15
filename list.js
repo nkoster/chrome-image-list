@@ -3,18 +3,49 @@ elX = document.createElement('div')
 buttonX = document.createElement('button')
 buttonX.textContent = 'Exit Image List'
 
-imgs = [...new Set(Array.from(document.images))]
-    .map(img => img.src)
-    .filter(src => src ? true : false )
-
-Array.from(document.styleSheets).forEach(s => {
-    if (s.ownerNode.innerText) {
-        const d = s.ownerNode.innerText.match(/\((.*?)\)/)[1].replace(/('|")/g,'')
-        d.match(/^http/) !== null && imgs.push(d)    
+const getBackgroundImages = () => {
+    const getStyle = (x, styleProp) => {
+        if (x.currentStyle) var y = x.currentStyle[styleProp]
+        else if (window.getComputedStyle) var y = document.defaultView.getComputedStyle(x, null).getPropertyValue(styleProp)
+        return y
     }
-})
+    const elements = document.getElementsByTagName('*')
+    let results = [], i = 0, bgIm
+    for (;elements[i];i++) {
+        bgIm = getStyle(elements[i], 'background-image');
+        if (bgIm && bgIm !== 'none') {
+            results.push(bgIm.match(/\((.*?)\)/)[1].replace(/"/g, ''))
+        }
+    }
+    return results
+}
 
-imgs = imgs.sort()
+let imgs = [...new Set(Array.from(document.images)
+    .map(img => img.src)
+    .filter(src => src ? true : false))]
+
+const backgrounds = [...new Set(getBackgroundImages())]
+
+imgs = [...new Set([...imgs, ...backgrounds])].sort()
+    .filter(src => {
+        if (src.substring(0, 4) === 'http') {
+            if (src.toLowerCase().includes('.jpeg')) return true
+            if (src.toLowerCase().includes('.jpg')) return true
+            if (src.toLowerCase().includes('.gif')) return true
+            if (src.toLowerCase().includes('.png')) return true
+            if (src.toLowerCase().includes('.apng')) return true
+            if (src.toLowerCase().includes('.webp')) return true
+            if (src.toLowerCase().includes('.apng')) return true
+            if (src.toLowerCase().includes('.svg')) return true
+            if (src.toLowerCase().includes('.bmp')) return true
+            if (src.toLowerCase().includes('.ico')) return true
+            if (src.toLowerCase().includes('.tiff')) return true
+            return false
+        } else {
+            if (src.toLowerCase().match(/^data/)) return true
+            return false
+        }
+    })
 
 elX.style.cssText = 'overflow:scroll;position:absolute;text-align:center;height:600px;padding:10px;top:20px;left:20px;right:20px;background:#cbc;z-index:10000;border:4px solid black;border-radius:10px'
 if (imgs.length > 0) {
