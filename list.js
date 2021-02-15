@@ -26,33 +26,35 @@ let imgs = [...new Set(Array.from(document.images)
 
 const backgrounds = [...new Set(getBackgroundImages())]
 
-imgs = [...new Set([...imgs, ...backgrounds])].sort()
+imgs = [...new Set([...imgs, ...backgrounds])]
     .filter(src => {
         if (src.substring(0, 4) === 'http') {
-            if (src.toLowerCase().includes('.jpeg')) return true
-            if (src.toLowerCase().includes('.jpg')) return true
-            if (src.toLowerCase().includes('.gif')) return true
-            if (src.toLowerCase().includes('.png')) return true
-            if (src.toLowerCase().includes('.apng')) return true
-            if (src.toLowerCase().includes('.webp')) return true
-            if (src.toLowerCase().includes('.apng')) return true
-            if (src.toLowerCase().includes('.svg')) return true
-            if (src.toLowerCase().includes('.bmp')) return true
-            if (src.toLowerCase().includes('.ico')) return true
-            if (src.toLowerCase().includes('.tiff')) return true
-            return false
+            // if (src.toLowerCase().includes('.jpeg')) return true
+            // if (src.toLowerCase().includes('.jpg')) return true
+            // if (src.toLowerCase().includes('.gif')) return true
+            // if (src.toLowerCase().includes('.png')) return true
+            // if (src.toLowerCase().includes('.apng')) return true
+            // if (src.toLowerCase().includes('.webp')) return true
+            // if (src.toLowerCase().includes('.apng')) return true
+            // if (src.toLowerCase().includes('.svg')) return true
+            // if (src.toLowerCase().includes('.bmp')) return true
+            // if (src.toLowerCase().includes('.ico')) return true
+            // if (src.toLowerCase().includes('.tiff')) return true
+            // if (src.toLowerCase().includes('slack')) return true
+            return true
         } else {
             if (src.toLowerCase().match(/^data/)) return true
             return false
         }
     })
+    .sort()
 
 elX.style.cssText = 'overflow:scroll;position:absolute;text-align:center;height:600px;padding:10px;top:20px;left:20px;right:20px;background:#cbc;z-index:10000;border:4px solid black;border-radius:10px'
 if (imgs.length > 0) {
     elX.innerHTML += `<h3 style="color:black">Image List (${imgs.length} found)</h3>`
     elX.innerHTML += '<ul>'
     imgs.forEach((img, index) => elX.innerHTML +=
-        `<li style="list-style-type:none;padding:10px"><img style="border:2px solid red;vertical-align:middle" src="${img}"> ${index + 1} <a style="padding-left:5px;" href="${img}">${img}</a></li>`
+        `<li style="list-style-type:none;padding:10px"><img style="border:1px solid white;vertical-align:middle" src="${img}"> ${index + 1} <a style="padding-left:5px;" href="${img}">${img}</a></li>`
     )
     elX.innerHTML += '</ul>'
 } else {
